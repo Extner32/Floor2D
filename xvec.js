@@ -1,3 +1,4 @@
+'use strict';
 class vec3 {
   constructor(x = 0, y = 0, z = 0) {
     this.x = x;
@@ -11,7 +12,7 @@ class vec3 {
   }
 
   // Subtract another vector
-  subtract(v) {
+  sub(v) {
     return new vec3(this.x - v.x, this.y - v.y, this.z - v.z);
   }
 
@@ -70,7 +71,7 @@ class vec2 {
   }
 
   // Subtract another vector
-  subtract(v) {
+  sub(v) {
     return new vec2(this.x - v.x, this.y - v.y);
   }
 

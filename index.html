@@ -4,18 +4,38 @@
         <title>Floor2D</title>
         <link rel="icon" type="image/png" href="favicon.png?v=0" />
         <link rel="stylesheet" href="style.css" />
+        <script defer src="https://cdn.jsdelivr.net/npm/mathlive"></script>
+        
+
+
     </head>
     <body>
         <canvas id="viewport"></canvas>
 
         <div class="container">
-            <div class="sidebar" id="sidebar">Sidebar</div>
+            <div class="sidebar" id="sidebar">
+                <div class="toolbar">
+                    <button class="toolbar-btn" id="new-expression">new expression</button>
+                    <button class="toolbar-btn" id="new-vector">[vec]</button>
+                    <button class="toolbar-btn" id="new-matrix">[mat]</button>
+                </div>
+
+                <div id="expressions">
+
+                </div>
+            
+            </div>
             <div class="resizer" id="resizer"></div>
         </div>
 
-        <script src="drawutils.js"></script>
-        <script src="render.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
         <script src="xvec.js"></script>
+        <script src="inline_shortcuts.js"></script>
+
+        <script src="sidebar.js"></script>
+        <script src="drawutils.js"></script>
+        <script src="expression.js"></script>
+        <script src="render.js"></script>
         <script src="main.js"></script>
     </body>
 </html>

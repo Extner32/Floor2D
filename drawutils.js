@@ -1,10 +1,17 @@
+'use strict';
 // Get the canvas element and its drawing context
 const canvas = document.getElementById("viewport");
 const ctx = canvas.getContext("2d");
 
+//fill the entire canvas with color
+function canvasFill(color) {
+  ctx.fillStyle = color
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
 function drawLine(start, end, color, width = 2) {
   ctx.beginPath(); // Start a new path
-  ctx.strokeStyle = color.toRGB();
+  ctx.strokeStyle = color
   ctx.lineWidth = width;
   ctx.moveTo(start.x, start.y);
   ctx.lineTo(end.x, end.y);
@@ -34,7 +41,7 @@ function drawVec2(position, vector, color, width = 2) {
 
   ctx.beginPath();
   ctx.lineWidth = 0;
-  ctx.fillStyle = color.toRGB();
+  ctx.fillStyle = color
   ctx.moveTo(tip0.x, tip0.y);
   ctx.lineTo(tip1.x, tip1.y);
   ctx.lineTo(tip2.x, tip2.y);

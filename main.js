@@ -1,37 +1,43 @@
 onCanvasResize();
 
+let isMiddleDragging = false;
+let lastMousePos = null;
+
 function onCanvasResize() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   render();
 }
 
-const resizer = document.getElementById("resizer");
-const sidebar = document.getElementById("sidebar");
+// Resize on window resize
+window.addEventListener("resize", onCanvasResize);
 
-let isResizing = false;
 
-resizer.addEventListener("mousedown", function (e) {
-  isResizing = true;
-  document.body.style.cursor = "ew-resize";
-});
-
-document.addEventListener("mousemove", function (e) {
-  if (!isResizing) return;
-
-  let newWidth = e.clientX;
-  if (newWidth < 100) newWidth = 100; // minimum width
-  if (newWidth > 600) newWidth = 600; // maximum width
-
-  sidebar.style.width = `${newWidth}px`;
-});
-
-document.addEventListener("mouseup", function () {
-  if (isResizing) {
-    isResizing = false;
-    document.body.style.cursor = "default";
+//camera drag===========================
+canvas.addEventListener("mousedown", (e) => {
+  if (e.button === 1) { // 1 = middle mouse
+    isMiddleDragging = true;
+    lastMousePos = new vec2(e.clientX, e.clientY);
+    e.preventDefault(); // prevent middle-click scroll
+    sidebar.querySelectorAll("math-field").forEach(elem => elem.blur())
   }
 });
 
-// Resize on window resize
-window.addEventListener("resize", onCanvasResize);
+canvas.addEventListener("mousemove", (e) => {
+  if (isMiddleDragging) {
+    const currentMousePos = new vec2(e.clientX, e.clientY);
+    const delta = currentMousePos.sub(lastMousePos);
+
+    // Update camera position (move opposite to drag direction)
+    cam_pos = cam_pos.sub(delta.scale(1 / cam_scale)); // adjust for zoom
+
+    lastMousePos = currentMousePos;
+    render(); // re-render scene
+  }
+});
+
+canvas.addEventListener("mouseup", (e) => {
+  if (e.button === 1) {
+    isMiddleDragging = false;
+  }
+});

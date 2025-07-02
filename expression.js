@@ -9,6 +9,8 @@ function getSelectedMathfield() {
 }
 
 
+
+
 function insertMatrix(mathfield, rows, cols) {
   let latex = '\\begin{bmatrix}';
 
@@ -58,18 +60,21 @@ function newExpression(value = '') {
       event.preventDefault();
       expression.remove();
     }
+
+    if (event.key === "Enter") {
+      newExpression();
+    }
+
   });
+
+
+
+  mf.addEventListener("input", (event) => {onExpressionChanged(mf);});
 
   mf.addEventListener("focus", () => {lastSelectedMathfield = mf});
 
   //disable sounds when you do an illegal action in the mathfield
-  //mf.soundsDirectory = null; //<- this doesn't work for some reason (even though the docs say it should work)
-  mf.keypressSound = {
-  spacebar: null,
-  return: null,
-  delete: null,
-  default: null,
-  }
+  MathfieldElement.soundsDirectory = null;
 
   
 
@@ -80,6 +85,7 @@ function newExpression(value = '') {
   mf.inlineShortcuts = INLINE_SHORTCUTS;
 
   mf.focus();
+  onExpressionChanged(mf);
   lastSelectedMathfield = mf
 }
 
@@ -103,4 +109,12 @@ window.addEventListener('DOMContentLoaded', () => {
         lastSelectedMathfield.focus()
         insertMatrix(lastSelectedMathfield, 2, 2);
     })
+
+
+  //for debugging
+  //newExpression("a=2");
+  //newExpression("b=2");
+  //newExpression("vec\\left(\\begin{bmatrix}a\\\\ b\\end{bmatrix},\\begin{bmatrix}2 & 0\\\\ 0 & 2\\end{bmatrix}\\cdot\\begin{bmatrix}\\sqrt{a}\\\\ a^2\\end{bmatrix}+\\begin{bmatrix}2\\\\ b\\end{bmatrix}\\bullet\\begin{bmatrix}a\\\\ a\\cdot2\\end{bmatrix}\\right)")
+  newExpression("vec\\left(\\begin{bmatrix}1\\\\ 2\\end{bmatrix},\\begin{bmatrix}5\\\\ 6\\end{bmatrix}\\right)")
+
 });

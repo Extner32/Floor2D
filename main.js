@@ -17,7 +17,7 @@ window.addEventListener("resize", onCanvasResize);
 canvas.addEventListener("mousedown", (e) => {
   if (e.button === 1) { // 1 = middle mouse
     isMiddleDragging = true;
-    lastMousePos = new vec2(e.clientX, e.clientY);
+    lastMousePos = newVec2(e.clientX, e.clientY);
     e.preventDefault(); // prevent middle-click scroll
     sidebar.querySelectorAll("math-field").forEach(elem => elem.blur())
   }
@@ -25,11 +25,10 @@ canvas.addEventListener("mousedown", (e) => {
 
 canvas.addEventListener("mousemove", (e) => {
   if (isMiddleDragging) {
-    const currentMousePos = new vec2(e.clientX, e.clientY);
+    const currentMousePos = newVec2(e.clientX, e.clientY);
     const delta = currentMousePos.sub(lastMousePos);
 
-    // Update camera position (move opposite to drag direction)
-    cam_pos = cam_pos.sub(delta.scale(1 / cam_scale)); // adjust for zoom
+    cam_pos = cam_pos.sub(delta.mul(1 / cam_scale));
 
     lastMousePos = currentMousePos;
     render(); // re-render scene
